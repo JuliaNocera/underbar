@@ -193,25 +193,20 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    var toReturn = false;
-    if(iterator === undefined){
-      iterator = _.identity;
-    };
+   
+   if(iterator === undefined){
+    iterator = _.identity;
+   };
 
-    if(collection.length === 0){
-      return true;
-    };
-
-    for(var i = 0; i < collection.length; i++){
-      if(iterator(collection[i])){
-        toReturn = true;
+   return _.reduce(collection, function(accumulator, val){
+      if(iterator(val) && accumulator){
+         return true;
       }
       else{
-        toReturn = false;
-      }
-    };
+        return false;
+      };
+   }, true);
 
-    return toReturn;
 // TIP: Try re-using reduce() here.
   };
 
@@ -256,8 +251,9 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
-  };
 
+  };
+  
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
