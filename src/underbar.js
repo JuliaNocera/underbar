@@ -316,7 +316,19 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-
+  var memory = {};
+  var check = function(){
+    var str = JSON.stringify(arguments);
+    if(memory[str] !== undefined){
+      console.log('already here');
+      return memory[str];
+    }
+    else{
+      memory[str] = func.apply(this, arguments);
+      return memory[str];
+    } 
+  }
+  return check;
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -347,20 +359,21 @@
   // TIP: This function's test suite will ask that you not modify the original
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
-  _.shuffle = function(array) { 
-    var toReturn = [];
-    var obj = {};
-    var arr = Array.prototype.slice.call(array);
-
-    for(var i = 0; i < arr.length; i++){
-      if(obj[Math.floor((Math.random() * arr.length-1) + 0)] === undefined){
-        obj[Math.floor((Math.random() * 10) + 1)] = arr[i];
-      }
+ _.shuffle = function(array) { 
+  var arr = Array.prototype.slice.call(array);
+  var randomize = function(){
+    for(var i = array.length-1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
-    for(var k in obj){
-      toReturn.push(obj[k]);
+  }
+  randomize(arr);
+    if(arr[0] === array[0]){
+      randomize(arr)
     }
-    return toReturn;
+    return arr;
   };
 
 
