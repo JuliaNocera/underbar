@@ -316,6 +316,7 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -331,8 +332,8 @@
       setTimeout(function(){
           return func.apply(this, args);
           }, wait);
-
-      };
+     
+  };
 
 
 
@@ -346,7 +347,20 @@
   // TIP: This function's test suite will ask that you not modify the original
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
-  _.shuffle = function(array) {
+  _.shuffle = function(array) { 
+    var toReturn = [];
+    var obj = {};
+    var arr = Array.prototype.slice.call(array);
+
+    for(var i = 0; i < arr.length; i++){
+      if(obj[Math.floor((Math.random() * arr.length-1) + 0)] === undefined){
+        obj[Math.floor((Math.random() * 10) + 1)] = arr[i];
+      }
+    }
+    for(var k in obj){
+      toReturn.push(obj[k]);
+    }
+    return toReturn;
   };
 
 
